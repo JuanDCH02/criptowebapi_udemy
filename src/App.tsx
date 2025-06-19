@@ -1,10 +1,16 @@
 import './index.css'
 import { CriptoSearchForm } from './components/CriptoSearchForm'
+import  {useCriptoStore} from './store'
+import { useEffect } from 'react'
 
 
 function App() {
   
+const {fetchCriptos} = useCriptoStore()
 
+useEffect(() => (
+  fetchCriptos()
+),[fetchCriptos])
   return (
     <>
       <div className="container">
