@@ -11,6 +11,7 @@ const {fetchCriptos} = useCriptoStore()
 useEffect(() => (
   fetchCriptos()
 ),[fetchCriptos])
+
   return (
     <>
       <div className="container">
