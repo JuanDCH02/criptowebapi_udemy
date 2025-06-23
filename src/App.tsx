@@ -8,9 +8,12 @@ function App() {
   
 const {fetchCriptos} = useCriptoStore()
 
-useEffect(() => (
-  fetchCriptos()
-),[fetchCriptos])
+useEffect(() => {
+  const fetchData = async () => {
+    await fetchCriptos();
+  };
+  fetchData();
+}, [fetchCriptos])
 
   return (
     <>

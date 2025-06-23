@@ -1,14 +1,48 @@
 import { currencies } from "../data"
+import { useCriptoStore } from "../store"
+import { useState } from "react"
+import type { Pair } from "../types"
+import { ErrorMessage } from "./ErrorMessage"
 
 export const CriptoSearchForm = () => {
-  return (
-    <form className="form">
+
+    const {cryptocurrencies} = useCriptoStore()
+    const [error,SetError] = useState('')
+    const [pair,setPair] = useState<Pair>({
+        currency:'',
+        cryptocurrency:''
+    })
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) =>{
+        setPair({
+            ...pair,
+            [e.target.name]: e.target.value
+        })
+    }
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
+        e.preventDefault()
+        if(Object.values(pair).includes('')){
+            SetError('Ambos campos son obligatorios')
+            return
+        }
+        SetError('')
+
         
+    }
+
+  return (
+    <form className="form"
+        onSubmit={handleSubmit}
+        >
+        {error && <ErrorMessage><ErrorMessage/>}
         <div className="field">
+            
             <label htmlFor="currency">
                 Moneda:
             </label>
-            <select name="currency" id="currency">
+            <select name="currency" id="currency"
+                onChange={handleChange}
+                value={pair.currency}
+            >
                 <option value="">-- Seleccione --</option>
                 {
                 currencies.map( currency => (
@@ -21,12 +55,23 @@ export const CriptoSearchForm = () => {
         </div>
 
         <div className="field">
-            <label htmlFor="criptocurrency">
+            <label htmlFor="cryptocurrency">
                 Criptomoneda:
             </label>
-            <select name="criptocurrency" id="criptocurrency">
+            <select name="cryptocurrency" id="cryptocurrency"
+                onChange={handleChange}
+                value={pair.cryptocurrency}
+            >
                 <option value="">-- Seleccione --</option>
-                
+                {
+                    cryptocurrencies.map(crypto =>(
+                        <option
+                            key={crypto.CoinInfo.Name}
+                            value={crypto.CoinInfo.Name}
+                                >{crypto.CoinInfo.FullName}</option>
+                        )
+                    )
+                }
             </select>
         </div>
 
