@@ -1,5 +1,5 @@
 import {create} from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { devtools } from 'zustand/middleware'
 import type { CryptoCurrency, CryptoPrice, Pair } from './types'
 import { fetchCurrencyCryptoPrice, getCryptos } from './services/cryptoServices'
 
